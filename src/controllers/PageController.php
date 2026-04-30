@@ -5,49 +5,54 @@ class PageController
 
     private \Twig\Environment $twig; // Typer une variable (pas obligatoire en PHP)
 
-    function __construct()
+    public function __construct()
     {
         $loader = new \Twig\Loader\FilesystemLoader('../src/views');
         $this->twig = new \Twig\Environment($loader);
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
     }
 
-    function index()
+    public function index()
     {
         return function () {
             return $this->twig->render('pages/index.html.twig');
         };
     }
 
-    function bio()
+    public function bio()
     {
         return function () {
             return $this->twig->render('pages/bio.html.twig');
         };
     }
 
-    function projects()
+    public function projects()
     {
         return function () {
             return $this->twig->render('pages/projects.html.twig');
         };
     }
 
-    function contact()
+    public function contact()
     {
         return function () {
             return $this->twig->render('pages/contact.html.twig');
         };
     }
 
-    function lists()
+    public function lists()
     {
         return function () {
-            $pdo = DatabaseController::getInstance();
+            $pdo = $this->getPdo();
             $result = $pdo->query("SELECT * FROM employees");
 
             $users = $result->fetchAll();
             return $this->twig->render('pages/lists.html.twig', ["users" => $users]);
         };
+    }
+
+    private function getPdo()
+    {
+        return DatabaseController::getInstance();
     }
 }
