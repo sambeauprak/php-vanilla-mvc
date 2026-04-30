@@ -38,4 +38,15 @@ class PageController
             return $this->twig->render('pages/contact.html.twig');
         };
     }
+
+    function lists()
+    {
+        return function () {
+            $pdo = DatabaseController::getInstance();
+            $result = $pdo->query("SELECT * FROM employees");
+
+            $users = $result->fetchAll();
+            return $this->twig->render('pages/lists.html.twig', ["users" => $users]);
+        };
+    }
 }

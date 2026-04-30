@@ -6,6 +6,7 @@ use MiladRahimi\PhpRouter\Router;
 $router = Router::create();
 
 require_once __DIR__ . "/controllers/PageController.php";
+require_once __DIR__ . "/controllers/DatabaseController.php";
 
 $pageController = new PageController();
 
@@ -16,5 +17,7 @@ $router->get('/', $pageController->index());
 $router->get('/bio', $pageController->bio());
 $router->get('/projects', $pageController->projects());
 $router->get('/contact', $pageController->contact());
+
+$router->get('/lists', $pageController->lists());
 
 $router->dispatch();
