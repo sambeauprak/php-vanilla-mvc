@@ -3,5 +3,15 @@
 {% block contenu_principal %}
 	<header>
 		<h1>Lists</h1>
+		<ul>
+			{% for user in users %}
+				<li>
+					{{ user.EmployeeId }}
+					{{ user.FirstName }}
+					{{ user.Title }}
+				</li>
+			{% endfor %}
+		</ul>
+
 	</header>
 {% endblock %}

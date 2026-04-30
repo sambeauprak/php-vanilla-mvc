@@ -9,6 +9,7 @@ class PageController
     {
         $loader = new \Twig\Loader\FilesystemLoader('../src/views');
         $this->twig = new \Twig\Environment($loader);
+        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
     }
 
     function index()
