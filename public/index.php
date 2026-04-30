@@ -1,7 +1,7 @@
 <?php
-require_once 'vendor/autoload.php'; // Import autoload
+require_once '../vendor/autoload.php'; // Import autoload
 
-$loader = new \Twig\Loader\FilesystemLoader('views');
+$loader = new \Twig\Loader\FilesystemLoader('../src/views');
 $twig = new \Twig\Environment($loader);
 
 
@@ -19,4 +19,4 @@ if ($requestUri !== '/' && str_ends_with($requestUri, '/')) {
     exit;
 }
 
-require_once __DIR__ . "/routes.php";
+require_once __DIR__ . "/../src/routes.php";
