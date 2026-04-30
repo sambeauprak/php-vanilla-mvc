@@ -5,20 +5,11 @@ use MiladRahimi\PhpRouter\Router;
 
 $router = Router::create();
 
+require_once __DIR__ . "/controllers/PageController.php";
 
-$router->get('/', function () use ($twig) {
-    return $twig->render('pages/index.html.twig');
-});
+$router->get('/', indexPage($twig));
+$router->get('/bio', bioPage($twig));
+$router->get('/projects', projectsPage($twig));
+$router->get('/contact', contactPage($twig));
 
-$router->get('/bio', function () use ($twig) {
-    return $twig->render('pages/bio.html.twig');
-});
-
-$router->get('/projects', function () use ($twig) {
-    return $twig->render('pages/projects.html.twig');
-});
-
-$router->get('/contact', function () use ($twig) {
-    return $twig->render('pages/contact.html.twig');
-});
 $router->dispatch();
