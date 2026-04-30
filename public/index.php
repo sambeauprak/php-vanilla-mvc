@@ -1,9 +1,6 @@
 <?php
 require_once '../vendor/autoload.php'; // Import autoload
 
-$loader = new \Twig\Loader\FilesystemLoader('../src/views');
-$twig = new \Twig\Environment($loader);
-
 
 $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 

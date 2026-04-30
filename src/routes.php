@@ -7,9 +7,14 @@ $router = Router::create();
 
 require_once __DIR__ . "/controllers/PageController.php";
 
-$router->get('/', indexPage($twig));
-$router->get('/bio', bioPage($twig));
-$router->get('/projects', projectsPage($twig));
-$router->get('/contact', contactPage($twig));
+$pageController = new PageController();
+
+// $pageController est une nouvelle instance de la class PageController
+// objet
+
+$router->get('/', $pageController->index());
+$router->get('/bio', $pageController->bio());
+$router->get('/projects', $pageController->projects());
+$router->get('/contact', $pageController->contact());
 
 $router->dispatch();

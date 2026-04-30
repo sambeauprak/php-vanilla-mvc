@@ -1,29 +1,41 @@
 <?php
 
-function indexPage($twig)
+class PageController
 {
-    return function () use ($twig) {
-        return $twig->render('pages/index.html.twig');
-    };
-}
 
-function bioPage($twig)
-{
-    return function () use ($twig) {
-        return $twig->render('pages/bio.html.twig');
-    };
-}
+    private \Twig\Environment $twig; // Typer une variable (pas obligatoire en PHP)
 
-function projectsPage($twig)
-{
-    return function () use ($twig) {
-        return $twig->render('pages/projects.html.twig');
-    };
-}
+    function __construct()
+    {
+        $loader = new \Twig\Loader\FilesystemLoader('../src/views');
+        $this->twig = new \Twig\Environment($loader);
+    }
 
-function contactPage($twig)
-{
-    return function () use ($twig) {
-        return $twig->render('pages/contact.html.twig');
-    };
+    function index()
+    {
+        return function () {
+            return $this->twig->render('pages/index.html.twig');
+        };
+    }
+
+    function bio()
+    {
+        return function () {
+            return $this->twig->render('pages/bio.html.twig');
+        };
+    }
+
+    function projects()
+    {
+        return function () {
+            return $this->twig->render('pages/projects.html.twig');
+        };
+    }
+
+    function contact()
+    {
+        return function () {
+            return $this->twig->render('pages/contact.html.twig');
+        };
+    }
 }
