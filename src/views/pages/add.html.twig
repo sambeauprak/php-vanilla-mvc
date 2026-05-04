@@ -2,8 +2,13 @@
 
 {% block contenu_principal %}
 	<header>
-		<h1>It's me !</h1>
+		<h1>Add</h1>
 	</header>
 	<div class="dots dots1"></div>
 	<div class="dots dots2"></div>
+
+	<form action="/submit" method="post">
+		<input type="text" name="titre" id="titre"/>
+		<input type="submit" value="Ajouter"/>
+	</form>
 {% endblock %}

@@ -14,10 +14,7 @@ $pageController = new PageController();
 // objet
 
 $router->get('/', $pageController->index());
-$router->get('/bio', $pageController->bio());
-$router->get('/projects', $pageController->projects());
-$router->get('/contact', $pageController->contact());
-
-$router->get('/lists', $pageController->lists());
+$router->get('/add', $pageController->add());
+$router->post('/submit', $pageController->submit());
 
 $router->dispatch();

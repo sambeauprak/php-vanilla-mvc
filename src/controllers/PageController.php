@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/../models/Article.php";
+
 class PageController
 {
 
@@ -15,44 +17,24 @@ class PageController
     public function index()
     {
         return function () {
-            return $this->twig->render('pages/index.html.twig');
+            $articles = Article::getAll();
+            return $this->twig->render('pages/index.html.twig', ["articles" => $articles]);
         };
     }
 
-    public function bio()
+    public function add()
     {
         return function () {
-            return $this->twig->render('pages/bio.html.twig');
+            return $this->twig->render('pages/add.html.twig');
         };
     }
 
-    public function projects()
+    public function submit()
     {
         return function () {
-            return $this->twig->render('pages/projects.html.twig');
+            $title = $_POST["titre"];
+            Article::add($title);
+            header("Location: /");
         };
-    }
-
-    public function contact()
-    {
-        return function () {
-            return $this->twig->render('pages/contact.html.twig');
-        };
-    }
-
-    public function lists()
-    {
-        return function () {
-            $pdo = $this->getPdo();
-            $result = $pdo->query("SELECT * FROM employees");
-
-            $users = $result->fetchAll();
-            return $this->twig->render('pages/lists.html.twig', ["users" => $users]);
-        };
-    }
-
-    private function getPdo()
-    {
-        return DatabaseController::getInstance();
     }
 }

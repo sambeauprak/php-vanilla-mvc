@@ -2,7 +2,13 @@
 
 {% block contenu_principal %}
 	{% include 'partials/hero.html.twig' %}
-{% endblock %}
 
-{% block footer %}Page d'accueil
+	<h2>Articles</h>
+	<ul>
+		{% for article in articles %}
+			<li>
+				{{ article.title }}
+			</li>
+		{% endfor %}
+	</ul>
 {% endblock %}
