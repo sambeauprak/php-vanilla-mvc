@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Controllers;
+
+use PDO;
+
 class DatabaseController
 {
     private static $instance;
@@ -7,7 +11,9 @@ class DatabaseController
     static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new PDO("sqlite:" . __DIR__ . "/../db/blog.db");
+            if ($_ENV['DATABASE_ENGINE'] === 'sqlite') {
+                self::$instance = new PDO("sqlite:" . __DIR__ . "/../db/" . $_ENV['DATABASE_FILE']);
+            }
         }
 
         // create articles table

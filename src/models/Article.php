@@ -1,5 +1,11 @@
 <?php
 
+namespace App\Models;
+
+use App\Controllers\DatabaseController;
+
+use PDO;
+
 class Article
 {
     private $title;
@@ -17,7 +23,7 @@ class Article
     public static function getAll()
     {
         $result = DatabaseController::getInstance()->query("SELECT title FROM articles");
-        $articles = $result->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Article');
+        $articles = $result->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, self::class);
 
         return $articles;
     }

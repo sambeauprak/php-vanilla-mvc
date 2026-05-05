@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../models/Article.php";
+namespace App\Controllers;
+
+use App\Models\Article;
 
 class PageController
 {
@@ -14,27 +16,48 @@ class PageController
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
     }
 
+
+
+
+
+
+
+
+
     public function index()
     {
-        return function () {
-            $articles = Article::getAll();
-            return $this->twig->render('pages/index.html.twig', ["articles" => $articles]);
-        };
+        // Récupérer les articles depuis la base de données
+        $articles = Article::getAll();
+
+        // Rendre la vue Twig en passant les articles
+        return $this->twig->render('pages/index.html.twig', ["articles" => $articles]);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function add()
     {
-        return function () {
-            return $this->twig->render('pages/add.html.twig');
-        };
+        return $this->twig->render('pages/add.html.twig');
     }
 
     public function submit()
     {
-        return function () {
-            $title = $_POST["titre"];
-            Article::add($title);
-            header("Location: /");
-        };
+        $title = $_POST["titre"];
+        Article::add($title);
+        header("Location: /");
     }
 }
