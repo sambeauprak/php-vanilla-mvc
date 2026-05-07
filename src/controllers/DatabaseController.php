@@ -13,17 +13,14 @@ class DatabaseController
         if (!self::$instance) {
             if ($_ENV['DATABASE_ENGINE'] === 'sqlite') {
                 self::$instance = new PDO("sqlite:" . __DIR__ . "/../db/" . $_ENV['DATABASE_FILE']);
+            } else {
+                self::$instance = new PDO(
+                    $_ENV['DATABASE_ENGINE'] . ":host=" . $_ENV['DATABASE_HOST'] . ";dbname=" . $_ENV['DATABASE_NAME'],
+                    $_ENV['DATABASE_USER'],
+                    $_ENV['DATABASE_PASSWORD']
+                );
             }
         }
-
-        // create articles table
-        $sql = "CREATE TABLE IF NOT EXISTS articles (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            title VARCHAR(30) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )";
-        self::$instance->exec($sql);
-
 
         return self::$instance;
     }

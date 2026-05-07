@@ -1,14 +1,91 @@
 {% extends "layout.html.twig" %}
 
-{% block contenu_principal %}
-	{% include 'partials/hero.html.twig' %}
+{% block main %}
+	<div class="px-4 sm:px-6 lg:px-8">
+		<div class="sm:flex sm:items-center">
+			<div class="sm:flex-auto">
+				<h1 class="text-base font-semibold text-gray-900 dark:text-white">Pages</h1>
 
-	<h2>Articles</h>
-	<ul>
-		{% for article in articles %}
-			<li>
-				{{ article.title }}
-			</li>
-		{% endfor %}
-	</ul>
+			</div>
+			<div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+				<a href="/add" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500">Ajouter une page</a>
+			</div>
+		</div>
+
+
+		<div class="mt-8 flow-root">
+			<div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+				<div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+					{% if pages is empty %}
+						<div class="text-center">
+							<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" class="mx-auto size-12 text-gray-400 dark:text-gray-500">
+								<path d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<h3 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">Aucune page</h3>
+							<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Commencez par créer une nouvelle page.</p>
+							<div class="mt-6">
+								<a href="/add" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500">
+									<svg viewbox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="mr-1.5 -ml-0.5 size-5">
+										<path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"/>
+									</svg>
+									Nouvelle page
+								</a>
+							</div>
+						</div>
+					{% else %}
+						<table class="relative min-w-full divide-y divide-gray-300 dark:divide-white/15">
+							<thead>
+								<tr>
+									<th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0 dark:text-white">ID</th>
+									<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Nom</th>
+									<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Slug</th>
+									<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Date création</th>
+									<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Date modification</th>
+									<th scope="col" class="py-3.5 pr-4 pl-3 sm:pr-0">
+										<span class="sr-only">Edit</span>
+									</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-gray-200 dark:divide-white/10">
+								{% for page in pages %}
+									<tr>
+										<td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ page.id }}</td>
+										<td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ page.name }}</td>
+										<td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ page.slug }}</td>
+										<td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ page.createdAt }}</td>
+										<td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ page.updatedAt }}</td>
+										<td class="py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
+											<a href="/pages/{{ page.slug }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Voir<span class="sr-only">,
+													{{ page.name }}</span>
+											</a>
+											<a href="/edit/{{ page.id }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Éditer<span class="sr-only">,
+													{{ page.name }}</span>
+											</a>
+											<a href="/delete/{{ page.id }}" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Supprimer<span class="sr-only">,
+													{{ page.name }}</span>
+											</a>
+										</td>
+
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+		document.querySelectorAll('a[href^="/delete/"]').forEach(link => {
+link.addEventListener('click', function (event) {
+event.preventDefault();
+if (confirm("Êtes-vous sûr de vouloir supprimer cette page ?")) {
+window.location.href = this.href;
+}
+});
+});
+	</script>
 {% endblock %}
