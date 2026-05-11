@@ -1,0 +1,110 @@
+{% extends "layout.html.twig" %}
+
+{% block main %}
+	<div class="px-4 sm:px-6 lg:px-8">
+		<div class="sm:flex sm:items-center">
+			<div class="sm:flex-auto">
+				<h1 class="text-base font-semibold text-gray-900 dark:text-white">Blocks de la page "{{ page.name }}"</h1>
+				<p class="mt-2 text-sm text-gray-700 dark:text-gray-400">Gérez les blocks attachés à cette page.</p>
+			</div>
+		</div>
+
+		{% if attachedBlocks is not empty %}
+			<div class="mt-8">
+				<h2 class="text-base font-semibold text-gray-900 dark:text-white">Blocks attachés</h2>
+				<div class="mt-4 flow-root">
+					<div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+						<div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+							<table class="relative min-w-full divide-y divide-gray-300 dark:divide-white/15">
+								<thead>
+									<tr>
+										<th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0 dark:text-white">ID</th>
+										<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Nom</th>
+										<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Position</th>
+										<th scope="col" class="py-3.5 pr-4 pl-3 sm:pr-0">
+											<span class="sr-only">Actions</span>
+										</th>
+									</tr>
+								</thead>
+								<tbody class="divide-y divide-gray-200 dark:divide-white/10">
+									{% for item in attachedBlocks %}
+										<tr>
+											<td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ item.block.id }}</td>
+											<td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ item.block.name }}</td>
+											<td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ item.pb.position }}</td>
+											<td class="py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
+												<form action="/pages/{{ page.id }}/blocks/remove/{{ item.pb.id }}" method="POST" style="display:inline">
+													<button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300" onclick="return confirm('Êtes-vous sûr de vouloir retirer ce block de la page ?')">Retirer</button>
+												</form>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+
+		{% if availableBlocks is not empty %}
+			<div class="mt-8">
+				<h2 class="text-base font-semibold text-gray-900 dark:text-white">Blocks disponibles</h2>
+				<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Blocks qui peuvent être ajoutés à cette page.</p>
+				<div class="mt-4 flow-root">
+					<div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+						<div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+							<table class="relative min-w-full divide-y divide-gray-300 dark:divide-white/15">
+								<thead>
+									<tr>
+										<th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0 dark:text-white">ID</th>
+										<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Nom</th>
+										<th scope="col" class="py-3.5 pr-4 pl-3 sm:pr-0">
+											<span class="sr-only">Actions</span>
+										</th>
+									</tr>
+								</thead>
+								<tbody class="divide-y divide-gray-200 dark:divide-white/10">
+									{% for block in availableBlocks %}
+										<tr>
+											<td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ block.id }}</td>
+											<td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ block.name }}</td>
+											<td class="py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
+												<form action="/pages/{{ page.id }}/blocks/add" method="POST" style="display:inline">
+													<input type="hidden" name="block_id" value="{{ block.id }}">
+													<button type="submit" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Ajouter</button>
+												</form>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+
+		{% if availableBlocks is empty and attachedBlocks is empty %}
+			<div class="mt-8 text-center">
+				<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" class="mx-auto size-12 text-gray-400 dark:text-gray-500">
+					<path d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+				<h3 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">Aucun block disponible</h3>
+				<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Créez d'abord des blocks pour les ajouter à cette page.</p>
+				<div class="mt-6">
+					<a href="/blocks/add" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500">
+						<svg viewbox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="mr-1.5 -ml-0.5 size-5">
+							<path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"/>
+						</svg>
+						Nouveau block
+					</a>
+				</div>
+			</div>
+		{% endif %}
+
+		<div class="mt-6">
+			<a href="/" class="text-sm/6 font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">&larr; Retour aux pages</a>
+		</div>
+	</div>
+{% endblock %}

@@ -36,4 +36,28 @@ $router->post('/blocks/update/{id}', [BlockController::class, "update"]);
 $router->post('/blocks/submit', [BlockController::class, "submit"]);
 $router->get('/blocks/delete/{id}', [BlockController::class, "delete"]);
 
+/**
+ * Routes pour les variables (variants) d'un block
+ */
+
+// Affichage à l'écran
+$router->get('/blocks/{block_id}/variables', [BlockController::class, "variables"]);
+$router->get('/blocks/{block_id}/variables/add', [BlockController::class, "addVariable"]);
+$router->get('/blocks/{block_id}/variables/edit/{variable_id}', [BlockController::class, "editVariable"]);
+// Traitement des formulaires
+$router->post('/blocks/{block_id}/variables/submit', [BlockController::class, "submitVariable"]);
+$router->post('/blocks/{block_id}/variables/update/{variable_id}', [BlockController::class, "updateVariable"]);
+$router->get('/blocks/{block_id}/variables/delete/{variable_id}', [BlockController::class, "deleteVariable"]);
+
+
+/**
+ * Routes pour les blocks d'une page
+ */
+
+// Affichage à l'écran
+$router->get('/pages/{page_id}/blocks', [PageController::class, "manageBlocks"]);
+// Traitement des formulaires
+$router->post('/pages/{page_id}/blocks/add', [PageController::class, "addBlock"]);
+$router->post('/pages/{page_id}/blocks/remove/{pb_id}', [PageController::class, "removeBlock"]);
+
 $router->dispatch();

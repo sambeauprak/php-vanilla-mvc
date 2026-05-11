@@ -55,13 +55,13 @@
 										<td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ block.createdAt }}</td>
 										<td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ block.updatedAt }}</td>
 										<td class="py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
-											<a href="/blocks/show/{{ block.id }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Voir<span class="sr-only">,
+											<a href="/blocks/{{ block.id }}/variables" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Variables<span class="sr-only">,
 													{{ block.name }}</span>
 											</a>
-											<a href="/blocks/edit/{{ block.id }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Éditer<span class="sr-only">,
+											<a href="/blocks/edit/{{ block.id }}" class="ml-2 text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Éditer<span class="sr-only">,
 													{{ block.name }}</span>
 											</a>
-											<a href="/blocks/delete/{{ block.id }}" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Supprimer<span class="sr-only">,
+											<a href="/blocks/delete/{{ block.id }}" class="ml-2 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Supprimer<span class="sr-only">,
 													{{ block.name }}</span>
 											</a>
 										</td>

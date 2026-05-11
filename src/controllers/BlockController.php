@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Block;
+use App\Models\Variable;
 
 class BlockController
 {
@@ -75,5 +76,71 @@ class BlockController
         $type_id = $_POST["type_id"];
         Block::edit($id, $name, $type_id = null);
         header("Location: /");
+    }
+
+    // =============================
+    // Gestion des variables (variants)
+    // =============================
+
+    public function variables($block_id)
+    {
+        $block = Block::getById($block_id);
+
+        if (!$block) {
+            header("Location: /blocks");
+            exit;
+        }
+
+        $variables = Variable::getByBlockId($block_id);
+        return $this->twig->render('variables/index.html.twig', ["block" => $block, "variables" => $variables]);
+    }
+
+    public function addVariable($block_id)
+    {
+        $block = Block::getById($block_id);
+
+        if (!$block) {
+            header("Location: /blocks");
+            exit;
+        }
+
+        return $this->twig->render('variables/addOrEdit.html.twig', ["block" => $block]);
+    }
+
+    public function editVariable($block_id, $variable_id)
+    {
+        $block = Block::getById($block_id);
+        $variable = Variable::getById($variable_id);
+
+        if (!$block || !$variable) {
+            header("Location: /blocks");
+            exit;
+        }
+
+        return $this->twig->render('variables/addOrEdit.html.twig', ["block" => $block, "variable" => $variable]);
+    }
+
+    public function submitVariable($block_id)
+    {
+        $name = $_POST["name"];
+        $value = $_POST["value"];
+        Variable::add($name, $value, $block_id);
+
+        header("Location: /blocks/" . $block_id . "/variables");
+    }
+
+    public function updateVariable($block_id, $variable_id)
+    {
+        $name = $_POST["name"];
+        $value = $_POST["value"];
+        Variable::edit($variable_id, $name, $value, $block_id);
+
+        header("Location: /blocks/" . $block_id . "/variables");
+    }
+
+    public function deleteVariable($block_id, $variable_id)
+    {
+        Variable::delete($variable_id);
+        header("Location: /blocks/" . $block_id . "/variables");
     }
 }

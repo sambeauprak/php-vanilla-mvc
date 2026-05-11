@@ -4,6 +4,9 @@
       "App\\": "src/"
     }
   },
+  "scripts": {
+    "start": "php -S localhost:8000 -t public"
+  },
   "require": {
     "twig/twig": "^3.0",
     "miladrahimi/phprouter": "5.*",
