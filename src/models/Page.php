@@ -82,6 +82,16 @@ class Page
         return $page;
     }
 
+    public function getBlocks()
+    {
+        $pageBlocks = PageBlock::getByPageId($this->id);
+        $blocks = [];
+        foreach ($pageBlocks as $pageBlock) {
+            $blocks[] = $pageBlock->getBlock($pageBlock->getBlockId());
+        };
+        return $blocks;
+    }
+
     private static function slugify($text)
     {
         // replace non letter or digits by -

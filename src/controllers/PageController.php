@@ -35,7 +35,9 @@ class PageController
             header("Location: /");
             exit;
         }
-        return $this->twig->render('show.html.twig', ["page" => $page]);
+
+        $blocks = $page->getBlocks();
+        return $this->twig->render('pages/show.html.twig', ["page" => $page, "blocks" => $blocks]);
     }
 
     public function add()

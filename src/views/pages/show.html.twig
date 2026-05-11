@@ -10,9 +10,8 @@
 	</head>
 
 	<body class="h-full">
-
-		<main class="py-10">
-			<div class="px-4 sm:px-6 lg:px-8">{{ page.name }}</div>
-		</main>
+		{% for block in blocks %}
+			{% include "blocks/components/" ~ block.slug ~ ".html.twig" %}
+		{% endfor %}
 	</body>
 </html>
